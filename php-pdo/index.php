@@ -6,13 +6,16 @@
  * Time: 15:08
  */
 
-    //Dados da conexão
-    $db_user = "root";
-    $db_pws = "root";
-    $db_name = "interesse";
+    include_once 'config/Strings.php';
+    include_once 'class/Erro.php';
+
+    header('Content-Type: text/html; charset=utf-8');
 
     //String de conexão
-    $dsn = "mysql:host=localhost;dbname=".$db_name;
-
-    $conexao = new \PDO($dsn, $db_user, $db_pws);
-
+    try{
+        $conexao = new \PDO(DB_HOST.DB_NAME, DB_USER, DB_PWS);
+    }
+    catch (\PDOException $e){
+        $erro = new \Mensagem\Erro();
+        $erro->ExibirErroConexaoBancoDados($e);
+    }
